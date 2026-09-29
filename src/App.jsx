@@ -1,5 +1,5 @@
-import Studio from "./components/Studio.jsx";
+import Booth from "./components/Booth.jsx";
 
 export default function App() {
-  return <Studio />;
+  return <Booth />;
 }

@@ -32,8 +32,8 @@ export function fetchHealth() {
   return request("/api/health");
 }
 
-export function fetchBriefing(force = false) {
-  return request(force ? "/api/briefing?force=1" : "/api/briefing");
+export function fetchMatch() {
+  return request("/api/match");
 }
 
 export async function startBroadcast(body) {
@@ -48,7 +48,7 @@ export async function startBroadcast(body) {
     throw explain(err);
   }
   const data = await res.json().catch(() => ({}));
-  if (data?.briefing) return data;
+  if (data?.match || data?.briefing) return data;
   if (!res.ok) throw explain(null, data, res.status);
   return data;
 }
