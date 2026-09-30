@@ -30,18 +30,19 @@ test("compileCall keeps picture order and drops lines that would talk over each 
   assert.ok(cues.every((cue) => cue.cue.length <= 2000));
 });
 
-test("the Oslo reel is called in timestamp order from the frames", () => {
+test("the Wembley reel is called in timestamp order from the frames", () => {
   const match = loadMatch();
-  assert.equal(match.videoId, "ecxFwkUTpw4");
+  assert.equal(match.videoId, "oewyeR5F7TM");
   assert.ok(match.cues.length >= 8);
   for (let i = 1; i < match.cues.length; i += 1) {
     assert.ok(match.cues[i].at - match.cues[i - 1].at >= 14);
   }
   const spoken = match.cues.map((cue) => cue.cue).join("\n");
-  const level = spoken.indexOf("Norway one, Portugal one");
-  const lead = spoken.indexOf("Norway one, Portugal two");
-  assert.ok(level > 0 && lead > level);
+  const lead = spoken.indexOf("England two, Spain one");
+  const level = spoken.indexOf("England two, Spain two");
+  const winner = spoken.indexOf("England two, Spain three");
+  assert.ok(lead > 0 && level > lead && winner > level);
   const scoreCues = match.cues.filter((cue) => cue.cut);
-  assert.deepEqual(scoreCues.map((cue) => cue.label), ["One each", "Portugal lead"]);
-  assert.match(match.cues[0].cue, /Ullevaal/);
+  assert.deepEqual(scoreCues.map((cue) => cue.label), ["England lead", "Level again", "Spain win it"]);
+  assert.match(match.cues[0].cue, /Wembley/);
 });
